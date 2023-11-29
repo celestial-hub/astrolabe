@@ -1,0 +1,14 @@
+[package]
+name = "astrolabe"
+version = "0.1.0"
+edition = "2021"
+
+[build-dependencies]
+lalrpop = "0.20.0"
+
+[dependencies]
+logos = { version = "0.13", features = ["logos-derive"] }
+ariadne = { version = "0.3.0", features = ["auto-color"] }
+lalrpop-util = { version = "0.20.0", features = ["lexer", "unicode"] }
+clap = { version = "4.4.7", features = ["derive", "unicode"] }
+color-eyre = "0.6"

@@ -1,0 +1,95 @@
+use crate::{
+  lexer::{tokens::{Token, Type, Value}, LexicalError},
+  ast,
+};
+
+grammar;
+
+extern {
+  type Location = usize;
+  type Error = LexicalError;
+
+  enum Token {
+    "instruction" => Token::Instruction(<String>),
+    "data_section" => Token::DataSection,
+    "text_section" => Token::TextSection,
+    "global_section" => Token::GlobalSection,
+    "register" => Token::Register(<String>),
+    "type" => Token::Type(<Type>),
+    "label" => Token::Label(<String>),
+    "identifier" => Token::Identifier(<String>),
+    "number" => Token::Number(<u32>),
+    "string" => Token::String(<String>),
+    "[" => Token::OpenBracket,
+    "]" => Token::CloseBracket,
+    "(" => Token::OpenParen,
+    ")" => Token::CloseParen,
+    "," => Token::Comma,
+  }
+}
+
+pub Program: ast::Program = {
+  <data_section:DataSection?> <text_section:TextSection?> => {
+    ast::Program {
+      data_section: data_section.unwrap_or_default(),
+      text_section: text_section.unwrap_or_default(),
+    }
+  }
+};
+
+DataSection: ast::DataSection = {
+  "data_section" <variables:DataDeclaration*> => {
+    ast::DataSection {
+      variables,
+    }
+  }
+};
+
+DataDeclaration: ast::Variable = {
+  <variable_name:"label"> <variable_type:"type"> <value:DataValue> => {
+    ast::Variable {
+      name: variable_name,
+      type_: variable_type,
+      value,
+    }
+  }
+};
+
+DataValue: Value = {
+  "string" => Value::String(<>)
+};
+
+// TODO: global_section should not consume the label, it should be next a identifier
+TextSection: ast::TextSection = {
+  "text_section" "global_section" <entrypoint:"identifier"> <statements:Statement*> => {
+    ast::TextSection {
+      statements,
+      entrypoint,
+    }
+  }
+};
+
+Statement: ast::Statement = {
+  "label" => ast::Statement::Label(<>),
+  Instruction_ => ast::Statement::Instruction(<>)
+};
+
+Instruction_: ast::Instruction = {
+  <name:"instruction"> <args:InstructionArguments?> => ast::Instruction::new(name, args.unwrap_or_default())
+};
+
+InstructionArguments: Vec<ast::InstructionArgument> = {
+  <arg:SingleArgument> => vec![arg],
+  <arg:SingleArgument> "," <args:InstructionArguments> => {
+    let mut args = vec![arg];
+    args.extend(args.clone());
+    args
+  },
+};
+
+SingleArgument: ast::InstructionArgument = {
+  "register" => ast::InstructionArgument::Register(ast::Register { name: <> }),
+  "number" => ast::InstructionArgument::Immediate(<>),
+  "string" => ast::InstructionArgument::Literal(<>),
+  "identifier" => ast::InstructionArgument::Label(<>)
+};
