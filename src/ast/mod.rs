@@ -2,6 +2,8 @@ pub type Location = std::ops::Range<usize>;
 
 use crate::lexer::tokens::{Type, Value};
 
+pub mod to_string;
+
 #[derive(Clone, Debug, PartialEq)]
 pub struct Program {
   pub data_section: DataSection,
