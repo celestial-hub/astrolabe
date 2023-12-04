@@ -1,7 +1,12 @@
 [package]
-name = "astrolabe"
+name = "celestial-hub-astrolabe"
 version = "0.1.0"
 edition = "2021"
+description = "A simple MIPS compiler"
+license = "MIT"
+license-file = "LICENSE"
+homepage = "https://explore-celestial-with.me"
+repository = "https://github.com/celestial-hub/astrolabe"
 
 [build-dependencies]
 lalrpop = "0.20.0"
