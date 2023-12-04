@@ -1,4 +1,4 @@
-use astrolabe::{lexer::Lexer, parser::Parser};
+use celestial_hub_astrolabe::{lexer::Lexer, parser::Parser};
 
 fn main() -> color_eyre::Result<(), Box<dyn std::error::Error>> {
   color_eyre::install()?;
