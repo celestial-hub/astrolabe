@@ -20,7 +20,7 @@ impl Parser {
     let filename = lexer.filepath.split('/').last().unwrap();
     let source = lexer.source_code;
 
-    let mut report: ReportBuilder<(&str, std::ops::Range<usize>)> =
+    let report: ReportBuilder<(&str, std::ops::Range<usize>)> =
       Report::build(ReportKind::Error, filename, 12)
         .with_code(3)
         .with_config(Config::default().with_tab_width(2))
@@ -46,7 +46,7 @@ impl Parser {
 
           Err(Box::new(err))
         }
-        ParseError::User { ref error } => Err(Box::new(err)),
+        ParseError::User { .. } => Err(Box::new(err)),
         ParseError::UnrecognizedToken {
           ref token,
           ref expected,
@@ -79,5 +79,11 @@ impl Parser {
         _ => Err(Box::new(err)),
       },
     }
+  }
+}
+
+impl Default for Parser {
+  fn default() -> Self {
+    Self::new()
   }
 }
