@@ -81,9 +81,9 @@ Instruction_: ast::Instruction = {
 InstructionArguments: Vec<ast::InstructionArgument> = {
   <arg:SingleArgument> => vec![arg],
   <arg:SingleArgument> "," <args:InstructionArguments> => {
-    let mut args = vec![arg];
-    args.extend(args.clone());
-    args
+    let mut full_args = vec![arg];
+    full_args.extend(args.clone());
+    full_args
   },
 };
 
