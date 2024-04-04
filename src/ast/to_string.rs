@@ -19,7 +19,12 @@ impl fmt::Display for DataSection {
       .map(|var| var.to_string())
       .collect::<Vec<_>>()
       .join("\t\n");
-    write!(f, ".data\n{}", variables_str)
+    write!(
+      f,
+      ".data\n{}{}",
+      variables_str,
+      if variables_str.is_empty() { "" } else { "\n" }
+    )
   }
 }
 
@@ -28,7 +33,7 @@ impl fmt::Display for Variable {
     match &self.type_ {
       Type::Asciiz => {
         match &self.value {
-          Value::String(s) => write!(f, "{}: .asciiz \"{}\"", self.name, s),
+          Value::String(s) => write!(f, "{}: .asciiz {}", self.name, s),
           // Handle other value types if necessary
         }
       } // Handle other types if necessary
@@ -64,36 +69,28 @@ impl fmt::Display for Statement {
 impl fmt::Display for Instruction {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     match self {
-      Instruction::Li(args) => write!(
-        f,
-        "li {}",
-        args
-          .iter()
-          .map(|arg| arg.to_string())
-          .collect::<Vec<_>>()
-          .join(", ")
-      ),
-      Instruction::Add(args) => write!(
-        f,
-        "add {}",
-        args
-          .iter()
-          .map(|arg| arg.to_string())
-          .collect::<Vec<_>>()
-          .join(", ")
-      ),
-      Instruction::La(_) => todo!(),
-      Instruction::Syscall => todo!(),
-      Instruction::Move(_) => todo!(),
-      Instruction::Jal(_) => todo!(),
-      Instruction::Beq(_) => todo!(),
-      Instruction::Sub(_) => todo!(),
-      Instruction::Jr(_) => todo!(),
-      Instruction::Addi(_) => todo!(),
-      Instruction::Andi(_) => todo!(),
-      Instruction::J(_) => todo!(),
+      Instruction::Li(args) => write!(f, "li {}", write_args(args)),
+      Instruction::Add(args) => write!(f, "add {}", write_args(args)),
+      Instruction::La(args) => write!(f, "la {}", write_args(args)),
+      Instruction::Syscall => write!(f, "syscall"),
+      Instruction::Move(args) => write!(f, "move {}", write_args(args)),
+      Instruction::Jal(args) => write!(f, "jal {}", write_args(args)),
+      Instruction::Beq(args) => write!(f, "beq {}", write_args(args)),
+      Instruction::Sub(args) => write!(f, "sub {}", write_args(args)),
+      Instruction::Jr(args) => write!(f, "jr {}", write_args(args)),
+      Instruction::Addi(args) => write!(f, "addi {}", write_args(args)),
+      Instruction::Andi(args) => write!(f, "andi {}", write_args(args)),
+      Instruction::J(args) => write!(f, "j {}", write_args(args)),
     }
   }
+}
+
+fn write_args(args: &[InstructionArgument]) -> String {
+  args
+    .iter()
+    .map(|arg| arg.to_string())
+    .collect::<Vec<_>>()
+    .join(", ")
 }
 
 impl fmt::Display for InstructionArgument {
@@ -103,7 +100,6 @@ impl fmt::Display for InstructionArgument {
       InstructionArgument::Immediate(i) => write!(f, "{}", i),
       InstructionArgument::Label(l) => write!(f, "{}", l),
       InstructionArgument::Literal(l) => write!(f, "{}", l),
-      // Handle other cases if necessary
     }
   }
 }
