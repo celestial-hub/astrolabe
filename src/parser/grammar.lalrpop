@@ -89,7 +89,8 @@ InstructionArguments: Vec<ast::InstructionArgument> = {
 
 SingleArgument: ast::InstructionArgument = {
   "register" => ast::InstructionArgument::Register(ast::Register { name: <> }),
-  "number" => ast::InstructionArgument::Immediate(<>),
+  "number"  => ast::InstructionArgument::Immediate(<>),
+  "number" "(" <register:"register"> ")" => ast::InstructionArgument::Register(ast::Register { name: register }),
   "string" => ast::InstructionArgument::Literal(<>),
   "identifier" => ast::InstructionArgument::Label(<>)
 };

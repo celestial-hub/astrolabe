@@ -48,6 +48,8 @@ pub enum Instruction {
   Addi(Vec<InstructionArgument>),
   Andi(Vec<InstructionArgument>),
   J(Vec<InstructionArgument>),
+  Sw(Vec<InstructionArgument>),
+  Lw(Vec<InstructionArgument>),
 }
 
 impl Instruction {
@@ -65,6 +67,8 @@ impl Instruction {
       "addi" => Instruction::Addi(args),
       "andi" => Instruction::Andi(args),
       "j" => Instruction::J(args),
+      "sw" => Instruction::Sw(args),
+      "lw" => Instruction::Lw(args),
       _ => unreachable!(),
     }
   }

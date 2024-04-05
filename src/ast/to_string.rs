@@ -81,6 +81,8 @@ impl fmt::Display for Instruction {
       Instruction::Addi(args) => write!(f, "addi {}", write_args(args)),
       Instruction::Andi(args) => write!(f, "andi {}", write_args(args)),
       Instruction::J(args) => write!(f, "j {}", write_args(args)),
+      Instruction::Sw(args) => write!(f, "sw {}, 0({})", args[0], args[1]),
+      Instruction::Lw(args) => write!(f, "lw {}", write_args(args)),
     }
   }
 }

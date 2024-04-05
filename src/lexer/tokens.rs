@@ -22,7 +22,7 @@ pub fn handle_type(lex: &mut logos::Lexer<Token>) -> Type {
 #[logos(skip r";.*")]
 pub enum Token {
   // Instructions
-  #[regex("li|la|syscall|move|jal|beq|sub|add|jr|addi|andi|j", |lex| lex.slice().to_string())]
+  #[regex("li|la|syscall|move|jal|beq|sub|add|jr|addi|andi|j|sw", |lex| lex.slice().to_string())]
   Instruction(String),
 
   // Sections
