@@ -1,40 +1,50 @@
 pub type Location = std::ops::Range<usize>;
 
+use serde::Serialize;
+
 use crate::lexer::tokens::{Type, Value};
 
 pub mod to_string;
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
 pub struct Program {
   pub data_section: DataSection,
   pub text_section: TextSection,
 }
 
-#[derive(Clone, Debug, PartialEq, Default)]
+#[derive(Serialize, Clone, Debug, PartialEq, Default)]
+#[serde(rename_all = "camelCase")]
 pub struct DataSection {
   pub variables: Vec<Variable>,
 }
 
-#[derive(Clone, Debug, PartialEq, Default)]
+#[derive(Serialize, Clone, Debug, PartialEq, Default)]
+#[serde(rename_all = "camelCase")]
 pub struct TextSection {
   pub statements: Vec<Statement>,
   pub entrypoint: String,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
 pub struct Variable {
   pub name: String,
   pub type_: Type,
   pub value: Value,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
+#[serde(tag = "kind", content = "value")]
 pub enum Statement {
   Instruction(Instruction),
   Label(String),
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(tag = "kind", content = "args")]
+#[serde(rename_all = "camelCase")]
 pub enum Instruction {
   Li(Vec<InstructionArgument>),
   La(Vec<InstructionArgument>),
@@ -74,7 +84,9 @@ impl Instruction {
   }
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
+#[serde(tag = "kind", content = "value")]
 pub enum InstructionArgument {
   Register(Register),
   Immediate(u32),
@@ -82,12 +94,15 @@ pub enum InstructionArgument {
   Literal(String),
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
 pub struct Register {
   pub name: String,
 }
 
-#[derive(Clone, Debug, PartialEq)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
+#[serde(rename_all = "camelCase")]
+#[serde(tag = "kind", content = "value")]
 pub enum Operand {
   Immediate(i32),
   Register(Register),
