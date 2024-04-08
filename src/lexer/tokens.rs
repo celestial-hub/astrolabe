@@ -7,6 +7,8 @@ pub enum Type {
 }
 
 #[derive(Serialize, Debug, Clone, PartialEq, Eq)]
+#[serde(tag = "kind", content = "value")]
+#[serde(rename_all = "camelCase")]
 pub enum Value {
   String(String),
 }
