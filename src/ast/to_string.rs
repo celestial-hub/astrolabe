@@ -83,6 +83,17 @@ impl fmt::Display for Instruction {
       Instruction::J(args) => write!(f, "j {}", write_args(args)),
       Instruction::Sw(args) => write!(f, "sw {}, 0({})", args[0], args[1]),
       Instruction::Lw(args) => write!(f, "lw {}", write_args(args)),
+      Instruction::Slt(args) => write!(f, "slt {}", write_args(args)),
+      Instruction::Beqz(args) => write!(f, "beqz {}", write_args(args)),
+      Instruction::Bltz(args) => write!(f, "bltz {}", write_args(args)),
+      Instruction::Bgtz(args) => write!(f, "bgtz {}", write_args(args)),
+      Instruction::Blez(args) => write!(f, "blez {}", write_args(args)),
+      Instruction::Bgez(args) => write!(f, "bgez {}", write_args(args)),
+      Instruction::Blt(args) => write!(f, "blt {}", write_args(args)),
+      Instruction::Bgt(args) => write!(f, "bgt {}", write_args(args)),
+      Instruction::Ble(args) => write!(f, "ble {}", write_args(args)),
+      Instruction::Bge(args) => write!(f, "bge {}", write_args(args)),
+      Instruction::Bne(args) => write!(f, "bne {}", write_args(args)),
     }
   }
 }

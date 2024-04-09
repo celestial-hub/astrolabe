@@ -51,15 +51,56 @@ pub enum Instruction {
   Syscall,
   Move(Vec<InstructionArgument>),
   Jal(Vec<InstructionArgument>),
-  Beq(Vec<InstructionArgument>),
   Sub(Vec<InstructionArgument>),
   Add(Vec<InstructionArgument>),
   Jr(Vec<InstructionArgument>),
   Addi(Vec<InstructionArgument>),
   Andi(Vec<InstructionArgument>),
+
+  /// Jump to label. `j label`
   J(Vec<InstructionArgument>),
+
+  /// Store word. `sw $t0, 0($t1)`
   Sw(Vec<InstructionArgument>),
+
+  /// Load word. `lw $t0, $t1`
   Lw(Vec<InstructionArgument>),
+
+  /// Set if less than. `slt $t0, $t1, $t2`
+  Slt(Vec<InstructionArgument>),
+
+  /// Branch if equal zero. `beqz $t0, label`
+  Beqz(Vec<InstructionArgument>),
+
+  /// Branch less than zero. `bltz $t0, label`
+  Bltz(Vec<InstructionArgument>),
+
+  /// Branch greater than zero. `bgtz $t0, label`
+  Bgtz(Vec<InstructionArgument>),
+
+  /// Branch less than or equal to zero. `blez $t0, label`
+  Blez(Vec<InstructionArgument>),
+
+  /// Branch greater than or equal to zero. `bgez $t0, label`
+  Bgez(Vec<InstructionArgument>),
+
+  /// Branch less than. `blt $t0, $t1, label`
+  Blt(Vec<InstructionArgument>),
+
+  /// Branch greater than. `bgt $t0, $t1, label`
+  Bgt(Vec<InstructionArgument>),
+
+  /// Branch less than or equal to. `ble $t0, $t1, label`
+  Ble(Vec<InstructionArgument>),
+
+  /// Branch greater than or equal to. `bge $t0, $t1, label`
+  Bge(Vec<InstructionArgument>),
+
+  /// Branch on equal. `beq $t0, $t1, label`
+  Beq(Vec<InstructionArgument>),
+
+  /// Branch on not equal. `bne $t0, $t1, label`
+  Bne(Vec<InstructionArgument>),
 }
 
 impl Instruction {
@@ -79,6 +120,8 @@ impl Instruction {
       "j" => Instruction::J(args),
       "sw" => Instruction::Sw(args),
       "lw" => Instruction::Lw(args),
+      "slt" => Instruction::Slt(args),
+      "beqz" => Instruction::Beqz(args),
       _ => unreachable!(),
     }
   }
