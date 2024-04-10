@@ -51,8 +51,8 @@ impl fmt::Display for TextSection {
       .join("\n");
     write!(
       f,
-      "\t.text\n\t.global {}\n{}:\n{}",
-      self.entrypoint, self.entrypoint, statements_str
+      "\t.text\n\t.global {}\n{}",
+      self.entrypoint, statements_str
     )
   }
 }

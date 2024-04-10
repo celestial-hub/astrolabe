@@ -19,11 +19,20 @@ pub struct DataSection {
   pub variables: Vec<Variable>,
 }
 
-#[derive(Serialize, Clone, Debug, PartialEq, Default)]
+#[derive(Serialize, Clone, Debug, PartialEq)]
 #[serde(rename_all = "camelCase")]
 pub struct TextSection {
   pub statements: Vec<Statement>,
   pub entrypoint: String,
+}
+
+impl Default for TextSection {
+  fn default() -> Self {
+    Self {
+      statements: Default::default(),
+      entrypoint: "main".into(),
+    }
+  }
 }
 
 #[derive(Serialize, Clone, Debug, PartialEq)]
@@ -111,7 +120,6 @@ impl Instruction {
       "syscall" => Instruction::Syscall,
       "move" => Instruction::Move(args),
       "jal" => Instruction::Jal(args),
-      "beq" => Instruction::Beq(args),
       "sub" => Instruction::Sub(args),
       "add" => Instruction::Add(args),
       "jr" => Instruction::Jr(args),
@@ -122,6 +130,16 @@ impl Instruction {
       "lw" => Instruction::Lw(args),
       "slt" => Instruction::Slt(args),
       "beqz" => Instruction::Beqz(args),
+      "bltz" => Instruction::Bltz(args),
+      "bgtz" => Instruction::Bgtz(args),
+      "blez" => Instruction::Blez(args),
+      "bgez" => Instruction::Bgez(args),
+      "blt" => Instruction::Blt(args),
+      "bgt" => Instruction::Bgt(args),
+      "ble" => Instruction::Ble(args),
+      "bge" => Instruction::Bge(args),
+      "beq" => Instruction::Beq(args),
+      "bne" => Instruction::Bne(args),
       _ => unreachable!(),
     }
   }
