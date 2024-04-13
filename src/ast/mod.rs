@@ -78,8 +78,26 @@ pub enum Instruction {
   /// Set if less than. `slt $t0, $t1, $t2`
   Slt(Vec<InstructionArgument>),
 
+  /// Set if less or equal to. `sle $t0, $t1, $t2`
+  Sle(Vec<InstructionArgument>),
+
+  /// Set if greater than. `sgt $t0, $t1, $t2`
+  Sgt(Vec<InstructionArgument>),
+
+  /// Set if greater than or equal to. `sge $t0, $t1, $t2`
+  Sge(Vec<InstructionArgument>),
+
+  /// Set if equal. `seq $t0, $t1, $t2`
+  Seq(Vec<InstructionArgument>),
+
+  /// Set if not equal. `sne $t0, $t1, $t2`
+  Sne(Vec<InstructionArgument>),
+
   /// Branch if equal zero. `beqz $t0, label`
   Beqz(Vec<InstructionArgument>),
+
+  /// Branch if not equal zero. `bnez $t0, label`
+  Bnez(Vec<InstructionArgument>),
 
   /// Branch less than zero. `bltz $t0, label`
   Bltz(Vec<InstructionArgument>),
@@ -129,7 +147,13 @@ impl Instruction {
       "sw" => Instruction::Sw(args),
       "lw" => Instruction::Lw(args),
       "slt" => Instruction::Slt(args),
+      "sle" => Instruction::Sle(args),
+      "sgt" => Instruction::Sgt(args),
+      "sge" => Instruction::Sge(args),
+      "seq" => Instruction::Seq(args),
+      "sne" => Instruction::Sne(args),
       "beqz" => Instruction::Beqz(args),
+      "bnez" => Instruction::Beqz(args),
       "bltz" => Instruction::Bltz(args),
       "bgtz" => Instruction::Bgtz(args),
       "blez" => Instruction::Blez(args),

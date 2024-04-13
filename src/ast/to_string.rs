@@ -32,11 +32,19 @@ impl fmt::Display for Variable {
   fn fmt(&self, f: &mut fmt::Formatter) -> fmt::Result {
     match &self.type_ {
       Type::Asciiz => {
-        match &self.value {
-          Value::String(s) => write!(f, "{}: .asciiz {}", self.name, s),
-          // Handle other value types if necessary
+        if let Value::String(value) = &self.value {
+          write!(f, "{name}: .asciiz {value}", name = self.name)
+        } else {
+          unreachable!()
         }
-      } // Handle other types if necessary
+      }
+      Type::Space => {
+        if let Value::Bytes(size) = &self.value {
+          write!(f, "{name}: .space {size}", name = self.name)
+        } else {
+          unreachable!()
+        }
+      }
     }
   }
 }
@@ -85,6 +93,7 @@ impl fmt::Display for Instruction {
       Instruction::Lw(args) => write!(f, "lw {}", write_args(args)),
       Instruction::Slt(args) => write!(f, "slt {}", write_args(args)),
       Instruction::Beqz(args) => write!(f, "beqz {}", write_args(args)),
+      Instruction::Bnez(args) => write!(f, "bnez {}", write_args(args)),
       Instruction::Bltz(args) => write!(f, "bltz {}", write_args(args)),
       Instruction::Bgtz(args) => write!(f, "bgtz {}", write_args(args)),
       Instruction::Blez(args) => write!(f, "blez {}", write_args(args)),
@@ -94,6 +103,11 @@ impl fmt::Display for Instruction {
       Instruction::Ble(args) => write!(f, "ble {}", write_args(args)),
       Instruction::Bge(args) => write!(f, "bge {}", write_args(args)),
       Instruction::Bne(args) => write!(f, "bne {}", write_args(args)),
+      Instruction::Sle(args) => write!(f, "sle {}", write_args(args)),
+      Instruction::Sgt(args) => write!(f, "sgt {}", write_args(args)),
+      Instruction::Sge(args) => write!(f, "sge {}", write_args(args)),
+      Instruction::Seq(args) => write!(f, "seq {}", write_args(args)),
+      Instruction::Sne(args) => write!(f, "sne {}", write_args(args)),
     }
   }
 }

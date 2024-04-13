@@ -4,6 +4,7 @@ use serde::Serialize;
 #[derive(Serialize, Debug, Clone, PartialEq, Eq)]
 pub enum Type {
   Asciiz,
+  Space,
 }
 
 #[derive(Serialize, Debug, Clone, PartialEq, Eq)]
@@ -11,11 +12,13 @@ pub enum Type {
 #[serde(rename_all = "camelCase")]
 pub enum Value {
   String(String),
+  Bytes(u32),
 }
 
 pub fn handle_type(lex: &mut logos::Lexer<Token>) -> Type {
   match lex.slice() {
     ".asciiz" => Type::Asciiz,
+    ".space" => Type::Space,
     _ => unreachable!(),
   }
 }
@@ -39,7 +42,7 @@ pub enum Token {
   GlobalSection,
 
   // Types
-  #[token(".asciiz", handle_type)]
+  #[token(".asciiz|.space", handle_type)]
   Type(Type),
 
   // Registers
