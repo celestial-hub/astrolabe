@@ -42,7 +42,7 @@ pub enum Token {
   GlobalSection,
 
   // Types
-  #[token(".asciiz|.space", handle_type)]
+  #[regex("\\.asciiz|\\.space", handle_type)]
   Type(Type),
 
   // Registers

@@ -66,6 +66,12 @@ pub enum Instruction {
   Addi(Vec<InstructionArgument>),
   Andi(Vec<InstructionArgument>),
 
+  /// Multiply. `mul $t0, $t1, $t2`
+  Mul(Vec<InstructionArgument>),
+
+  /// Integer division. `div $t0, $t1, $t2`
+  Div(Vec<InstructionArgument>),
+
   /// Jump to label. `j label`
   J(Vec<InstructionArgument>),
 
@@ -140,6 +146,8 @@ impl Instruction {
       "jal" => Instruction::Jal(args),
       "sub" => Instruction::Sub(args),
       "add" => Instruction::Add(args),
+      "mul" => Instruction::Mul(args),
+      "div" => Instruction::Div(args),
       "jr" => Instruction::Jr(args),
       "addi" => Instruction::Addi(args),
       "andi" => Instruction::Andi(args),

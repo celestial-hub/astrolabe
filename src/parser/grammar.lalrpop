@@ -56,7 +56,8 @@ DataDeclaration: ast::Variable = {
 };
 
 DataValue: Value = {
-  "string" => Value::String(<>)
+  "string" => Value::String(<>),
+  "number" => Value::Bytes(<>)
 };
 
 // TODO: global_section should not consume the label, it should be next a identifier

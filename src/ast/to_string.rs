@@ -79,6 +79,8 @@ impl fmt::Display for Instruction {
     match self {
       Instruction::Li(args) => write!(f, "li {}", write_args(args)),
       Instruction::Add(args) => write!(f, "add {}", write_args(args)),
+      Instruction::Mul(args) => write!(f, "mul {}", write_args(args)),
+      Instruction::Div(args) => write!(f, "div {}", write_args(args)),
       Instruction::La(args) => write!(f, "la {}", write_args(args)),
       Instruction::Syscall => write!(f, "syscall"),
       Instruction::Move(args) => write!(f, "move {}", write_args(args)),

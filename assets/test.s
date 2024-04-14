@@ -1,16 +1,14 @@
 .data
-str_0: .asciiz "done!"
+__buffer_1: .space 50
 
 	.text
 	.global main
 main:
-	li $t0, 0
-start:
-	addi $t0, $t0, 1
-	blt $t0, 10, start
-	j done
-done:
-	la $t1, str_0
+	li $v0, 8
+	la $a0, buffer
+	li $a1, 50
+	syscall
+	move $t0, $v0
 	li $v0, 4
-	move $a0, $t1
+	move $a0, $t0
 	syscall
