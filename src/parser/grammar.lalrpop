@@ -18,7 +18,7 @@ extern {
     "type" => Token::Type(<Type>),
     "label" => Token::Label(<String>),
     "identifier" => Token::Identifier(<String>),
-    "number" => Token::Number(<u32>),
+    "number" => Token::Number(<i32>),
     "string" => Token::String(<String>),
     "[" => Token::OpenBracket,
     "]" => Token::CloseBracket,

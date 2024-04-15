@@ -182,7 +182,7 @@ impl Instruction {
 #[serde(tag = "kind", content = "value")]
 pub enum InstructionArgument {
   Register(Register),
-  Immediate(u32),
+  Immediate(i32),
   Label(String),
   Literal(String),
 }

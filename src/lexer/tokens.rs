@@ -12,7 +12,7 @@ pub enum Type {
 #[serde(rename_all = "camelCase")]
 pub enum Value {
   String(String),
-  Bytes(u32),
+  Bytes(i32),
 }
 
 pub fn handle_type(lex: &mut logos::Lexer<Token>) -> Type {
@@ -60,8 +60,8 @@ pub enum Token {
   // Numeric constants
   // Allow literal numbers, negative numbers, and hex numbers
   #[regex("-?[0-9]+", |lex| lex.slice().parse().ok())]
-  #[regex("0[xX][0-9a-fA-F]+", |lex| u32::from_str_radix(&lex.slice()[2..], 16).ok())]
-  Number(u32),
+  #[regex("0[xX][0-9a-fA-F]+", |lex| i32::from_str_radix(&lex.slice()[2..], 16).ok())]
+  Number(i32),
 
   // Strings for .asciiz, ignore the quotes
   #[regex("\"[^\"]*\"", |lex| lex.slice()[1..lex.slice().len() - 1].to_string())]
