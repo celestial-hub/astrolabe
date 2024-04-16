@@ -134,6 +134,9 @@ pub enum Instruction {
 
   /// Branch on not equal. `bne $t0, $t1, label`
   Bne(Vec<InstructionArgument>),
+
+  /// Halt the program. `halt`
+  Halt,
 }
 
 impl Instruction {
@@ -142,6 +145,7 @@ impl Instruction {
       "li" => Instruction::Li(args),
       "la" => Instruction::La(args),
       "syscall" => Instruction::Syscall,
+      "halt" => Instruction::Halt,
       "move" => Instruction::Move(args),
       "jal" => Instruction::Jal(args),
       "sub" => Instruction::Sub(args),

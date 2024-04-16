@@ -110,6 +110,7 @@ impl fmt::Display for Instruction {
       Instruction::Sge(args) => write!(f, "sge {}", write_args(args)),
       Instruction::Seq(args) => write!(f, "seq {}", write_args(args)),
       Instruction::Sne(args) => write!(f, "sne {}", write_args(args)),
+      Instruction::Halt => write!(f, "halt"),
     }
   }
 }
